@@ -89,7 +89,6 @@ class RedisConnectionCollecter {
         }
 
         if ($info['password'] !== self::PASSEORD) {
-
             if(!$redis->auth($info['password'])) {
                 throw new Exception("failed to auth!");
             }
@@ -101,13 +100,13 @@ class RedisConnectionCollecter {
 
     /**
      * コネクションを閉じる場合はこちらを使う
-     * 直にクローズしない
      */
     public static function close($key)
     {
         if(isset(self::$_info[$key])
             && isset(self::$_connections[$key])) {
             $_connections[$key]->close();
+            unset($_connections[$key]);
         }
     }
 
